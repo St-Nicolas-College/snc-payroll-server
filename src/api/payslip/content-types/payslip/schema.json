@@ -1,0 +1,95 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payslips",
+  "info": {
+    "singularName": "payslip",
+    "pluralName": "payslips",
+    "displayName": "payslip"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "payroll_period": {
+      "type": "string"
+    },
+    "employee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "payslips"
+    },
+    "basic_pay": {
+      "type": "decimal",
+      "default": 0
+    },
+    "honorarium": {
+      "type": "decimal",
+      "default": 0
+    },
+    "premium": {
+      "type": "decimal",
+      "default": 0
+    },
+    "loads_unit": {
+      "type": "integer",
+      "default": 0
+    },
+    "extra_loads": {
+      "type": "decimal",
+      "default": 0
+    },
+    "overtime": {
+      "type": "decimal",
+      "default": 0
+    },
+    "late_deduction": {
+      "type": "decimal",
+      "default": 0
+    },
+    "gross_pay": {
+      "type": "decimal",
+      "default": 0
+    },
+    "sss": {
+      "type": "decimal"
+    },
+    "philhealth": {
+      "type": "decimal",
+      "default": 0
+    },
+    "pagibig": {
+      "type": "decimal",
+      "default": 0
+    },
+    "net_gross_pay": {
+      "type": "decimal",
+      "default": 0
+    },
+    "withholding_tax": {
+      "type": "decimal",
+      "default": 0
+    },
+    "sss_loan": {
+      "type": "decimal",
+      "default": 0
+    },
+    "pagibig_loan": {
+      "type": "decimal",
+      "default": 0
+    },
+    "cash_advance": {
+      "type": "decimal",
+      "default": 0
+    },
+    "health_card": {
+      "type": "decimal",
+      "default": 0
+    },
+    "net_pay": {
+      "type": "decimal",
+      "default": 0
+    }
+  }
+}

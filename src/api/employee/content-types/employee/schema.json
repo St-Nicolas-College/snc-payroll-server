@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "employees",
+  "info": {
+    "singularName": "employee",
+    "pluralName": "employees",
+    "displayName": "employee"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "employee_no": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "rate_per_day": {
+      "type": "decimal"
+    },
+    "rate_per_hour": {
+      "type": "decimal"
+    },
+    "payslips": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::payslip.payslip",
+      "mappedBy": "employee"
+    }
+  }
+}

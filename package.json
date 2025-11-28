@@ -1,0 +1,36 @@
+{
+  "name": "snc-payroll-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Strapi application",
+  "scripts": {
+    "build": "strapi build",
+    "console": "strapi console",
+    "deploy": "strapi deploy",
+    "dev": "strapi develop",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "5.31.2",
+    "@strapi/plugin-users-permissions": "5.31.2",
+    "@strapi/strapi": "5.31.2",
+    "pg": "8.8.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=20.0.0 <=24.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "edd64cab-2aeb-4847-ac7a-e9b83c7941e0",
+    "installId": "778240190b2b191c7ddcfe02a8d4f9a6a1ef695c21d887dae6bd3a7cdab6ddf6"
+  }
+}

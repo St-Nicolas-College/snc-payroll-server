@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payroll_periods",
+  "info": {
+    "singularName": "payroll-period",
+    "pluralName": "payroll-periods",
+    "displayName": "PayrollPeriod"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "payroll_period": {
+      "type": "string"
+    },
+    "payroll_period_start": {
+      "type": "date"
+    },
+    "payroll_period_end": {
+      "type": "date"
+    }
+  }
+}
