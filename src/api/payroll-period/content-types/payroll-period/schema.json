@@ -19,6 +19,12 @@
     },
     "payroll_period_end": {
       "type": "date"
+    },
+    "payslips": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::payslip.payslip",
+      "mappedBy": "payroll_period"
     }
   }
 }

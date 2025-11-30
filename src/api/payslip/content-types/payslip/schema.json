@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "payroll_period": {
+    "payroll_period_old": {
       "type": "string"
     },
     "employee": {
@@ -90,6 +90,12 @@
     "net_pay": {
       "type": "decimal",
       "default": 0
+    },
+    "payroll_period": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::payroll-period.payroll-period",
+      "inversedBy": "payslips"
     }
   }
 }

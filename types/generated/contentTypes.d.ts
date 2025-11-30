@@ -488,6 +488,7 @@ export interface ApiPayrollPeriodPayrollPeriod
     payroll_period: Schema.Attribute.String;
     payroll_period_end: Schema.Attribute.Date;
     payroll_period_start: Schema.Attribute.Date;
+    payslips: Schema.Attribute.Relation<'oneToMany', 'api::payslip.payslip'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -529,7 +530,11 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
     overtime: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     pagibig: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     pagibig_loan: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
-    payroll_period: Schema.Attribute.String;
+    payroll_period: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::payroll-period.payroll-period'
+    >;
+    payroll_period_old: Schema.Attribute.String;
     philhealth: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     premium: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
