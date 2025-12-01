@@ -4,7 +4,7 @@
   "info": {
     "singularName": "payslip",
     "pluralName": "payslips",
-    "displayName": "payslip"
+    "displayName": "Payslip"
   },
   "options": {
     "draftAndPublish": false
@@ -32,11 +32,15 @@
       "type": "decimal",
       "default": 0
     },
-    "loads_unit": {
+    "amount_per_unit": {
+      "type": "decimal",
+      "default": 0
+    },
+    "no_of_units": {
       "type": "integer",
       "default": 0
     },
-    "extra_loads": {
+    "units_total_amount": {
       "type": "decimal",
       "default": 0
     },
@@ -79,7 +83,15 @@
       "type": "decimal",
       "default": 0
     },
-    "cash_advance": {
+    "cash_advance_amount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "cash_advance_balance": {
+      "type": "decimal",
+      "default": 0
+    },
+    "cash_advance_deduction": {
       "type": "decimal",
       "default": 0
     },

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "employee",
     "pluralName": "employees",
-    "displayName": "employee"
+    "displayName": "Employee"
   },
   "options": {
     "draftAndPublish": false
@@ -12,7 +12,8 @@
   "pluginOptions": {},
   "attributes": {
     "employee_no": {
-      "type": "string"
+      "type": "string",
+      "unique": true
     },
     "employee_name": {
       "type": "string"
@@ -23,11 +24,39 @@
     "department": {
       "type": "string"
     },
-    "rate_per_day": {
+    "basic_pay": {
+      "type": "decimal",
+      "default": 0
+    },
+    "honorarium": {
+      "type": "decimal",
+      "default": 0
+    },
+    "premium": {
       "type": "decimal"
     },
-    "rate_per_hour": {
-      "type": "decimal"
+    "amount_per_unit": {
+      "type": "integer"
+    },
+    "sss": {
+      "type": "decimal",
+      "default": 0
+    },
+    "philhealth": {
+      "type": "decimal",
+      "default": 0
+    },
+    "pagibig": {
+      "type": "decimal",
+      "default": 0
+    },
+    "cash_advance_amount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "cash_advance_balance": {
+      "type": "decimal",
+      "default": 0
     },
     "payslips": {
       "type": "relation",

@@ -433,7 +433,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
   collectionName: 'employees';
   info: {
-    displayName: 'employee';
+    displayName: 'Employee';
     pluralName: 'employees';
     singularName: 'employee';
   };
@@ -441,23 +441,32 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    amount_per_unit: Schema.Attribute.Integer;
+    basic_pay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    cash_advance_amount: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
+    cash_advance_balance: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     department: Schema.Attribute.String;
     employee_name: Schema.Attribute.String;
-    employee_no: Schema.Attribute.String;
+    employee_no: Schema.Attribute.String & Schema.Attribute.Unique;
+    honorarium: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::employee.employee'
     > &
       Schema.Attribute.Private;
+    pagibig: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     payslips: Schema.Attribute.Relation<'oneToMany', 'api::payslip.payslip'>;
+    philhealth: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     position: Schema.Attribute.String;
+    premium: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
-    rate_per_day: Schema.Attribute.Decimal;
-    rate_per_hour: Schema.Attribute.Decimal;
+    sss: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -499,7 +508,7 @@ export interface ApiPayrollPeriodPayrollPeriod
 export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
   collectionName: 'payslips';
   info: {
-    displayName: 'payslip';
+    displayName: 'Payslip';
     pluralName: 'payslips';
     singularName: 'payslip';
   };
@@ -507,18 +516,22 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    amount_per_unit: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     basic_pay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
-    cash_advance: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    cash_advance_amount: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
+    cash_advance_balance: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
+    cash_advance_deduction: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     employee: Schema.Attribute.Relation<'manyToOne', 'api::employee.employee'>;
-    extra_loads: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     gross_pay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     health_card: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     honorarium: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     late_deduction: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
-    loads_unit: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -527,6 +540,7 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     net_gross_pay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     net_pay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    no_of_units: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     overtime: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     pagibig: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     pagibig_loan: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
@@ -540,6 +554,8 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     sss: Schema.Attribute.Decimal;
     sss_loan: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    units_total_amount: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
