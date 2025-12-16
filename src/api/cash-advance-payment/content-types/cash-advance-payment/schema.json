@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cash_advance_payments",
+  "info": {
+    "singularName": "cash-advance-payment",
+    "pluralName": "cash-advance-payments",
+    "displayName": "CashAdvancePayment"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "cash_advance": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cash-advance.cash-advance",
+      "inversedBy": "cash_advance_payments"
+    },
+    "cash_advance_payment": {
+      "type": "decimal",
+      "default": 0
+    },
+    "payment_date": {
+      "type": "date"
+    },
+    "payroll_period": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payroll-period.payroll-period",
+      "inversedBy": "cash_advance_payment"
+    }
+  }
+}

@@ -430,6 +430,87 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCashAdvancePaymentCashAdvancePayment
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'cash_advance_payments';
+  info: {
+    displayName: 'CashAdvancePayment';
+    pluralName: 'cash-advance-payments';
+    singularName: 'cash-advance-payment';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    cash_advance: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::cash-advance.cash-advance'
+    >;
+    cash_advance_payment: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cash-advance-payment.cash-advance-payment'
+    > &
+      Schema.Attribute.Private;
+    payment_date: Schema.Attribute.Date;
+    payroll_period: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::payroll-period.payroll-period'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCashAdvanceCashAdvance extends Struct.CollectionTypeSchema {
+  collectionName: 'cash_advances';
+  info: {
+    displayName: 'CashAdvance';
+    pluralName: 'cash-advances';
+    singularName: 'cash-advance';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    cash_advance_amount: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
+    cash_advance_balance: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
+    cash_advance_payments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cash-advance-payment.cash-advance-payment'
+    >;
+    cash_advance_status: Schema.Attribute.Enumeration<
+      ['in-progress', 'completed']
+    > &
+      Schema.Attribute.DefaultTo<'in-progress'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date_applied: Schema.Attribute.Date;
+    date_completed: Schema.Attribute.Date;
+    employee: Schema.Attribute.Relation<'manyToOne', 'api::employee.employee'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cash-advance.cash-advance'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
   collectionName: 'employees';
   info: {
@@ -447,6 +528,10 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<0>;
     cash_advance_balance: Schema.Attribute.Decimal &
       Schema.Attribute.DefaultTo<0>;
+    cash_advances: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cash-advance.cash-advance'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -485,6 +570,10 @@ export interface ApiPayrollPeriodPayrollPeriod
     draftAndPublish: false;
   };
   attributes: {
+    cash_advance_payment: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::cash-advance-payment.cash-advance-payment'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1073,6 +1162,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::cash-advance-payment.cash-advance-payment': ApiCashAdvancePaymentCashAdvancePayment;
+      'api::cash-advance.cash-advance': ApiCashAdvanceCashAdvance;
       'api::employee.employee': ApiEmployeeEmployee;
       'api::payroll-period.payroll-period': ApiPayrollPeriodPayrollPeriod;
       'api::payslip.payslip': ApiPayslipPayslip;

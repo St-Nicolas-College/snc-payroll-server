@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cash_advances",
+  "info": {
+    "singularName": "cash-advance",
+    "pluralName": "cash-advances",
+    "displayName": "CashAdvance"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "employee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "cash_advances"
+    },
+    "cash_advance_amount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "cash_advance_balance": {
+      "type": "decimal",
+      "default": 0
+    },
+    "date_applied": {
+      "type": "date"
+    },
+    "date_completed": {
+      "type": "date"
+    },
+    "cash_advance_status": {
+      "type": "enumeration",
+      "default": "in-progress",
+      "enum": [
+        "in-progress",
+        "completed"
+      ]
+    },
+    "cash_advance_payments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cash-advance-payment.cash-advance-payment",
+      "mappedBy": "cash_advance"
+    }
+  }
+}
