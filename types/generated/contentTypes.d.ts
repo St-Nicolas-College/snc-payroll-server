@@ -462,6 +462,7 @@ export interface ApiCashAdvancePaymentCashAdvancePayment
       'oneToOne',
       'api::payroll-period.payroll-period'
     >;
+    payslips: Schema.Attribute.Relation<'oneToMany', 'api::payslip.payslip'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -613,6 +614,10 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<0>;
     cash_advance_deduction: Schema.Attribute.Decimal &
       Schema.Attribute.DefaultTo<0>;
+    cash_advance_payment: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::cash-advance-payment.cash-advance-payment'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

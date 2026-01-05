@@ -29,6 +29,12 @@
       "relation": "oneToOne",
       "target": "api::payroll-period.payroll-period",
       "inversedBy": "cash_advance_payment"
+    },
+    "payslips": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::payslip.payslip",
+      "mappedBy": "cash_advance_payment"
     }
   }
 }
