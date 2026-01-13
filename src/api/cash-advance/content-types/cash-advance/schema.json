@@ -44,6 +44,9 @@
       "relation": "oneToMany",
       "target": "api::cash-advance-payment.cash-advance-payment",
       "mappedBy": "cash_advance"
+    },
+    "date_updated": {
+      "type": "date"
     }
   }
 }

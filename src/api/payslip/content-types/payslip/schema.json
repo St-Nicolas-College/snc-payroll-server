@@ -103,6 +103,30 @@
       "type": "decimal",
       "default": 0
     },
+    "cisco_rate": {
+      "type": "integer",
+      "default": 0
+    },
+    "cisco_no_of_units": {
+      "type": "integer",
+      "default": 0
+    },
+    "cisco_total_amount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "rle_rate": {
+      "type": "integer",
+      "default": 0
+    },
+    "rle_no_of_units": {
+      "type": "integer",
+      "default": 0
+    },
+    "rle_total_amount": {
+      "type": "decimal",
+      "default": 0
+    },
     "payroll_period": {
       "type": "relation",
       "relation": "manyToOne",
@@ -114,6 +138,14 @@
       "relation": "manyToOne",
       "target": "api::cash-advance-payment.cash-advance-payment",
       "inversedBy": "payslips"
+    },
+    "mode": {
+      "type": "enumeration",
+      "default": "atm",
+      "enum": [
+        "cash",
+        "atm"
+      ]
     }
   }
 }

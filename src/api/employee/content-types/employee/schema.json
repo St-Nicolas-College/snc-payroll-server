@@ -69,6 +69,22 @@
       "relation": "oneToMany",
       "target": "api::cash-advance.cash-advance",
       "mappedBy": "employee"
+    },
+    "cisco_rate": {
+      "type": "integer",
+      "default": 0
+    },
+    "rle_rate": {
+      "type": "integer",
+      "default": 0
+    },
+    "sss_loan": {
+      "type": "decimal",
+      "default": 0
+    },
+    "pagibig_loan": {
+      "type": "decimal",
+      "default": 0
     }
   }
 }

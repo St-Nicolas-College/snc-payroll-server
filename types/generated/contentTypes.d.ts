@@ -498,6 +498,7 @@ export interface ApiCashAdvanceCashAdvance extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     date_applied: Schema.Attribute.Date;
     date_completed: Schema.Attribute.Date;
+    date_updated: Schema.Attribute.Date;
     employee: Schema.Attribute.Relation<'manyToOne', 'api::employee.employee'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -533,6 +534,7 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::cash-advance.cash-advance'
     >;
+    cisco_rate: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -547,12 +549,15 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     pagibig: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    pagibig_loan: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     payslips: Schema.Attribute.Relation<'oneToMany', 'api::payslip.payslip'>;
     philhealth: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     position: Schema.Attribute.String;
     premium: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
+    rle_rate: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     sss: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    sss_loan: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -618,6 +623,10 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::cash-advance-payment.cash-advance-payment'
     >;
+    cisco_no_of_units: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    cisco_rate: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    cisco_total_amount: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -632,6 +641,8 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
       'api::payslip.payslip'
     > &
       Schema.Attribute.Private;
+    mode: Schema.Attribute.Enumeration<['cash', 'atm']> &
+      Schema.Attribute.DefaultTo<'atm'>;
     net_gross_pay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     net_pay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     no_of_units: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
@@ -646,6 +657,9 @@ export interface ApiPayslipPayslip extends Struct.CollectionTypeSchema {
     philhealth: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     premium: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
+    rle_no_of_units: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    rle_rate: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    rle_total_amount: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     sss: Schema.Attribute.Decimal;
     sss_loan: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     units_total_amount: Schema.Attribute.Decimal &
