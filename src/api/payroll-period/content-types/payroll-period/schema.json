@@ -31,6 +31,26 @@
       "relation": "oneToOne",
       "target": "api::cash-advance-payment.cash-advance-payment",
       "mappedBy": "payroll_period"
+    },
+    "cut_off_type": {
+      "type": "enumeration",
+      "enum": [
+        "first_half",
+        "second_half"
+      ]
+    },
+    "pay_date": {
+      "type": "date"
+    },
+    "payroll_approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "user_info": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-info.user-info",
+      "inversedBy": "payroll_periods"
     }
   }
 }

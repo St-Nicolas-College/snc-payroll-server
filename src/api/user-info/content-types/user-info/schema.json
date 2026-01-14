@@ -34,6 +34,12 @@
     },
     "middle_name": {
       "type": "string"
+    },
+    "payroll_periods": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::payroll-period.payroll-period",
+      "mappedBy": "user_info"
     }
   }
 }

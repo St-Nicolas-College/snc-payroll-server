@@ -583,12 +583,16 @@ export interface ApiPayrollPeriodPayrollPeriod
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    cut_off_type: Schema.Attribute.Enumeration<['first_half', 'second_half']>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::payroll-period.payroll-period'
     > &
       Schema.Attribute.Private;
+    pay_date: Schema.Attribute.Date;
+    payroll_approved: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     payroll_period: Schema.Attribute.String;
     payroll_period_end: Schema.Attribute.Date;
     payroll_period_start: Schema.Attribute.Date;
@@ -597,6 +601,10 @@ export interface ApiPayrollPeriodPayrollPeriod
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_info: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::user-info.user-info'
+    >;
   };
 }
 
@@ -696,6 +704,10 @@ export interface ApiUserInfoUserInfo extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     middle_name: Schema.Attribute.String;
+    payroll_periods: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::payroll-period.payroll-period'
+    >;
     position: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
