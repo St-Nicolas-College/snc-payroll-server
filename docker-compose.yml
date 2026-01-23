@@ -36,7 +36,7 @@ services:
       # PAYMONGO CONFIG
       PAYMONGO_SECRET_KEY: ${PAYMONGO_SECRET_KEY}
     ports:
-      - 1339:1339
+      - 1336:1336
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${STRAPI_PORT}/"]
       interval: 5s
