@@ -7,6 +7,7 @@ module.exports = [
     config: {
       origin: [
         'http://localhost:3000',
+        'https://payroll.snc.edu.ph',
         'http://192.168.254.209:3000'
       ], // Nuxt 4 URL
       credentials: true,
