@@ -8,5 +8,5 @@ module.exports = ({ env }) => ({
   webhooks: {
     populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
   },
-  url: env("STRAPI_BACKEND_BASEURL")
+  // url: env("STRAPI_BACKEND_BASEURL")
 });
