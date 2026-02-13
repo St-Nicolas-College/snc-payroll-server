@@ -58,7 +58,7 @@ module.exports = {
     ctx.cookies.set("refresh_token", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "none",
       domain: 'https://payroll-server.snc.edu.ph',
       path: "/api/auth/refresh",
       maxAge: 7 * 24 * 60 * 60 * 1000,
