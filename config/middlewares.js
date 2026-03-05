@@ -12,7 +12,7 @@ module.exports = [
       ], // Nuxt 4 URL
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      headers: ['Content-Type', 'Authorization'],
+      headers: '*',
     },
   },
   'strapi::poweredBy',
