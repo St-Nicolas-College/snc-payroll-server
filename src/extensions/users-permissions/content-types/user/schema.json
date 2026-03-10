@@ -71,6 +71,12 @@
       "relation": "oneToOne",
       "target": "api::user-info.user-info",
       "mappedBy": "users_permissions_user"
+    },
+    "refresh_tokens": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::refresh-token.refresh-token",
+      "mappedBy": "user"
     }
   }
 }

@@ -1,9 +1,11 @@
-"use strict";
+import { randomBytes } from "crypto";
+import jwt from "jsonwebtoken";
 
+const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 const ACCESS_EXPIRES = "15m";
-const REFRESH_EXPIRES = "7d";
+const REFRESH_EXPIRES_DAYS = 7;
 
-module.exports = {
+export default {
   // ======================
   // LOGIN
   // ======================
@@ -36,42 +38,34 @@ module.exports = {
       .validatePassword(password, user.password);
 
     if (!validPassword) {
-      return ctx.unauthorized("Invalid credentials");
+      return ctx.unauthorized("Invalid password");
     }
 
-    // ✅ Access token (short-lived)
-    const accessToken = strapi
-      .plugin("users-permissions")
-      .service("jwt")
-      .issue({ id: user.id }, { expiresIn: ACCESS_EXPIRES });
+    // Create access  token
+    const accessToken = jwt.sign(
+      { id: user.id },
+      JWT_SECRET,
+      { expiresIn: "15m" }, // short-lived
+    );
 
-    // ✅ Refresh token (httpOnly cookie)
-    const refreshToken = strapi
-      .plugin("users-permissions")
-      .service("jwt")
-      .issue({ id: user.id }, { expiresIn: REFRESH_EXPIRES });
+    // Create refresh token
+    const refreshTokenValue = randomBytes(64).toString("hex");
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + REFRESH_EXPIRES_DAYS);
 
-    console.log("protocol:", ctx.request.protocol);
-    console.log("secure:", ctx.request.secure);
-    console.log("x-forwarded-proto:", ctx.request.headers["x-forwarded-proto"]);
-
-    ctx.cookies.set("refresh_token", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      domain: 'https://payroll-server.snc.edu.ph',
-      path: "/api/auth/refresh",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+    // Save refresh token in DB
+    await strapi.db.query("api::refresh-token.refresh-token").create({
+      data: { token: refreshTokenValue, user: user.id, expiresAt },
     });
 
     ctx.send({
-      accessToken,
-      //user,
+      jwt: accessToken,
+      refreshToken: refreshTokenValue,
       user: {
         id: user.id,
-        email: user.email,
         username: user.username,
-        role: user.role,
+        email: user.email,
+        role: user.role?.name,
         user_info: user.user_info,
       },
     });
@@ -81,57 +75,49 @@ module.exports = {
   // REFRESH ACCESS TOKEN
   // ======================
   async refresh(ctx) {
-    const token = ctx.cookies.get("refresh_token");
-    if (!token) return ctx.unauthorized();
+    const { refreshToken } = ctx.request.body;
+    if (!refreshToken) return ctx.unauthorized("Missing refresh token");
 
-    try {
-      const payload = await strapi
-        .plugin("users-permissions")
-        .service("jwt")
-        .verify(token);
-
-      // Find user and populate relations
-      const user = await strapi.db
-        .query("plugin::users-permissions.user")
-        .findOne({
-          where: { id: payload.id },
-          populate: {
-            role: true,
-            user_info: true,
-          },
-        });
-
-      if (!user) return ctx.unauthorized();
-
-      const accessToken = strapi
-        .plugin("users-permissions")
-        .service("jwt")
-        .issue({ id: user.id }, { expiresIn: ACCESS_EXPIRES });
-
-      ctx.send({
-        accessToken,
-        //user,
-        user: {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-          role: user.role,
-          user_info: user.user_info,
-        },
+    // Find refresh token in DB
+    const stored = await strapi.db
+      .query("api::refresh-token.refresh-token")
+      .findOne({
+        where: { token: refreshToken },
+        populate: { user: { populate: ['role']}}
       });
-    } catch {
-      ctx.unauthorized();
+
+    if (!stored || new Date(stored.expiresAt) < new Date()) {
+      return ctx.unauthorized("Invalid or expired refresh token");
     }
+
+    // const user = await strapi
+    //   .query("plugin::users-permissions.user")
+    //   .findOne({ where: { id: stored.user.id } });
+    const user = stored.user;
+
+    console.log(user)
+
+    // Generate new access token
+    const newAccessToken = jwt.sign(
+      { id: user.id, role: user.role?.name },
+      process.env.JWT_SECRET || "supersecret",
+      { expiresIn: "15m" },
+    );
+
+    ctx.send({ jwt: newAccessToken });
   },
 
   // ======================
   // LOGOUT
   // ======================
   async logout(ctx) {
-    ctx.cookies.set("refresh_token", null, {
-      path: "/api/auth/refresh",
-    });
+   const { refreshToken } = ctx.request.body;
+    if (!refreshToken) return ctx.badRequest("Missing refresh token");
 
-    ctx.send({ ok: true });
+    await strapi.db
+      .query("api::refresh-token.refresh-token")
+      .delete({ where: { token: refreshToken } });
+
+    ctx.send({ success: true });
   },
 };
