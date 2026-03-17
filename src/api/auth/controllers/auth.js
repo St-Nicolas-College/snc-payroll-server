@@ -83,7 +83,7 @@ export default {
       .query("api::refresh-token.refresh-token")
       .findOne({
         where: { token: refreshToken },
-        populate: { user: { populate: ['role']}}
+        populate: { user: { populate: ['role', 'user_info']}}
       });
 
     if (!stored || new Date(stored.expiresAt) < new Date()) {
@@ -104,7 +104,13 @@ export default {
       { expiresIn: "15m" },
     );
 
-    ctx.send({ jwt: newAccessToken });
+    ctx.send({ jwt: newAccessToken, user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role?.name,
+        user_info: user.user_info,
+      }, });
   },
 
   // ======================
